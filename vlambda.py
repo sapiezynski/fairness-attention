@@ -12,16 +12,21 @@ def std_err(p_hat, n):
 
     return np.sqrt((p_hat)*(1-p_hat)/n)
 
-def estimate_p(alignment):
+def estimate_p(alignment, n=None):
     """Calculates the population estimate
     
     Args:
         alignment: L_R matrix describing the alignment with a protected
             attribute, in the shape of |R| x |c|
             (one row per rank, one column per class indicator)
+        n: number of elements. If None, the size of the list is used, 
+            but it could be a different number (for example in case)
+            of aggregates it would be the number of unique items
 
     """
-    return np.sum(alignment, axis=0)/alignment.shape[0]
+    if n is None:
+        n = alignment.shape[0]
+    return np.sum(alignment, axis=0)/n
 
 def subtraction(a, b):
     return a-b
